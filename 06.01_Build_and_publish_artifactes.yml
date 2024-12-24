@@ -15,6 +15,7 @@ steps:
     installationPath: $(Agent.ToolDirectory)/dotnet
 - script: |
     echo "PATH=$PATH"
+    echo "##vso[task.prependpath]$(Agent.ToolsDirectory)/dotnet"
     dotnet --info
   displayName: 'Check .NET Installation'
 
