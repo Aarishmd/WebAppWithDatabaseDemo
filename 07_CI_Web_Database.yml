@@ -39,8 +39,8 @@ jobs:
             displayName: 'PS : Add Project GUID'
             enabled: false
       
-      - task: SonarCloudprepare@1
-        displayName: : 'prepare anylatics on sonarcloud'
+      - task: SonarCloudPrepare@1
+        displayName: 'prepare anylatics on sonarcloud'
         inputs:
           sonarCloud: SonarCloud
           organization: aarishmd12
