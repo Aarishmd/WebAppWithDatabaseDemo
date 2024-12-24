@@ -44,4 +44,4 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact (WebApp.zip)'
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)
+    PathtoPublish: '$(build.artifactstagingdirectory)'
