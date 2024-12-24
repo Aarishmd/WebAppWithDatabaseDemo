@@ -13,6 +13,11 @@ steps:
     packageType: 'sdk'
     version: '8.0.x'
     installationPath: $(Agent.ToolDirectory)/dotnet
+- script: |
+    echo "PATH=$PATH"
+    dotnet --info
+  displayName: 'Check .NET Installation'
+
 
 - task: DotNetCoreCLI@2
   displayName: Restore Nuget Package
