@@ -23,21 +23,29 @@ jobs:
           projects: '**/WebApp.csproj'
       
       - powershell: |
-            $paths = Get-ChildItem -include *.csproj -Recurse
-            foreach($pathobject in $paths) 
-            {
-                $path = $pathobject.fullname
-                $doc = New-Object System.Xml.XmlDocument
-                $doc.Load($path)
-                $child = $doc.CreateElement("ProjectGuid")
-                $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
-                $node = $doc.SelectSingleNode("//Project/PropertyGroup")
-                $node.AppendChild($child)
-                $doc.Save($path)
-            }
-            workingDirectory: WebApp
-            displayName: 'PS : Add Project GUID'
-            enabled: false
+          $paths = Get-ChildItem -include *.csproj -Recurse
+          foreach ($pathobject in $paths) {
+              $path = $pathobject.FullName
+              $doc = New-Object System.Xml.XmlDocument
+              $doc.Load($path)
+
+              # Check if the PropertyGroup node exists
+              $node = $doc.SelectSingleNode("//Project/PropertyGroup")
+              if ($node -eq $null) {
+                  Write-Host "No <PropertyGroup> node found in $path. Skipping."
+                  continue
+              }
+
+              # Add the ProjectGuid element
+              $child = $doc.CreateElement("ProjectGuid")
+              $child.InnerText = [guid]::NewGuid().ToString().ToUpper()
+              $node.AppendChild($child)
+
+              # Save changes to the file
+              $doc.Save($path)
+              Write-Host "Added ProjectGuid to $path."
+          }
+
       
       - task: SonarCloudPrepare@1
         displayName: 'prepare anylatics on sonarcloud'
