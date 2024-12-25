@@ -21,19 +21,19 @@ trigger:
      - 03_azure-pipelines-ci-cd.yml
 
 parameters:
-- name: runCompeletePipeline
-  displayName: Run All Task ?
+- name: runCompletePipeline
+  displayName: Run All Tasks ?
   type: boolean
-  default: true     
+  default: true   
   
 stages:
-  - stage: Build Stage
+  - stage: Build_Stage
     displayName: Build Stage
     jobs:
       - job: WebApp 
         displayName: Build Web APP
         pool:
-         name: Hosted Windows 2019
+         name: Hosted Windows 2019 with VS2019
          vmImage: 'windows-2019'
 
         variables:
@@ -51,9 +51,9 @@ stages:
           inputs:
             command: restore
             projects: '**/WebApp.csproj'
-        - task: WhiteSource Bolt@20
-          displayName: Scan Nuget Packages
-          enabled: ${{ parameters.runCompletePipeline }}
+        # - task: WhiteSource Bolt@20
+        #   displayName: Scan Nuget Packages
+        #   enabled: ${{ parameters.runCompletePipeline }}
         
         - task: PowerShell@2
           displayName: prepare for sonar Cloud
@@ -186,7 +186,7 @@ stages:
 
   - stage: Dev_Stage
     displayName:  Create & Deploye to Dev
-    dependsOn: Build Stage
+    dependsOn: Build_Stage
     variables: 
       azureSubscription: 'Pay-As-You-Go'
       ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
@@ -310,7 +310,7 @@ stages:
         - task: SqlAzureDacpacDeployment@1
           displayName: Deploy DacPac to SQL Azure
           inputs:
-            azureSubscription: 'WebAppWithDatabaseDemo_spn'
+            azureSubscription: 'Pay-As-You-Go(92882f0b-81c9-4214-8f4b-115816a1938a)'
             AuthenticationType: 'server'
             ServerName: '$(SqlServerName).database.windows.net,1433'
             DatabaseName: '$(Database.Name)'
