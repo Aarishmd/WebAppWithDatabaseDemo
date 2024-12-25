@@ -188,6 +188,7 @@ stages:
     displayName:  Create & Deploye to Dev
     dependsOn: Build_Stage
     variables: 
+      UniqueId: $(Build.BuildId)
       azureSubscription: 'Pay-As-You-Go'
       ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
       Database.Admin: 'houssem'
@@ -198,7 +199,6 @@ stages:
       SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(UniqueId)'
       Prefix: 'tunis'
       Release.EnvironmentName: 'dev'
-      UniqueId: '1280' #'$(Build.BuildId)'
       hostingPlanName: '$(Prefix)-service-plan'
     
     jobs:
