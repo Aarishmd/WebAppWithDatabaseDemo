@@ -190,13 +190,13 @@ stages:
     variables: 
       UniqueId: $(Build.BuildId)
       azureSubscription: 'Pay-As-You-Go'
-      ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG'
+      ResourceGroupName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-RG01'
       Database.Admin: 'houssem'
       Database.Password: '@Aa123456' # to be secured in Key Vault
-      Database.Name: 'EmployeesDB'
-      WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)'
+      Database.Name: 'EmployeesDB008'
+      WebAppName: '$(Prefix)-$(Release.EnvironmentName)-$(UniqueId)-webapp01-cicd'
       WebAppNameUrl: 'https://$(WebAppName).azurewebsites.net/'
-      SqlServerName: '$(Prefix)-sql-$(Release.EnvironmentName)-$(UniqueId)'
+      SqlServerName: '$(Prefix)-sql01-$(Release.EnvironmentName)-$(UniqueId)'
       Prefix: 'tunis'
       Release.EnvironmentName: 'dev'
       hostingPlanName: '$(Prefix)-service-plan'
